@@ -20,9 +20,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -211,8 +214,8 @@ fun Profile(profile: ProfileDecscription) {
         Box(
             modifier = Modifier
                 .size(40.dp)
-                .clip(RectangleShape).padding(6.dp)
-                ,
+                .clip(RectangleShape)
+                .padding(6.dp),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -278,13 +281,48 @@ fun Profile(profile: ProfileDecscription) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.onSurface.copy(0.68f))
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.onSurface.copy(0.68f))
         ) {
-        Spacer(modifier = Modifier.height(0.5.dp))}
-
+            Spacer(modifier = Modifier.height(0.5.dp))
+        }
 
 
     }
 }
+
+data class NavOption(val icon: Int, val title: String)
+
+
+@Composable
+fun NavItem(item: NavOption) {
+    Row(
+        modifier = Modifier.padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Icon(painter = painterResource(id = item.icon), contentDescription = item.title)
+
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = item.title,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+    }
+}
+
+@Composable
+fun NavOptions(options:List<NavOption>){
+    LazyColumn {
+        items(options){
+            option->
+            NavItem(option)
+        }
+    }
+}
+
+
 
 
