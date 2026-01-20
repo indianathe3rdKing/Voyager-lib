@@ -33,6 +33,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -306,22 +310,31 @@ data class NavOption(val icon: Int, val title: String)
 
 @Composable
 fun NavItem(item: NavOption) {
-    Row(
+    var clicked by remember { mutableStateOf(false) }
+    Surface(
+        color = MaterialTheme.colorScheme.surface,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Icon(painter = painterResource(id = item.icon), contentDescription = item.title)
+            .clickable { clicked = !clicked },
 
-        Spacer(modifier = Modifier.width(30.dp))
-        Text(
-            text = item.title,
-            style = MaterialTheme.typography.bodySmall,
-            fontSize = 20.sp,
-            color = MaterialTheme.colorScheme.onSurface.copy(0.92f)
-        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Icon(painter = painterResource(id = item.icon), contentDescription = item.title)
+
+            Spacer(modifier = Modifier.width(30.dp))
+            Text(
+                text = item.title,
+                style = MaterialTheme.typography.bodySmall,
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(0.92f)
+            )
+        }
     }
 }
 
